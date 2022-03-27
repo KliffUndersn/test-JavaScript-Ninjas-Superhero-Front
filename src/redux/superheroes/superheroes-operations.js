@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAll, createNew } from "../../shared/services/superheroes";
+import { getAll, createNew, getById } from "../../shared/services/superheroes";
 import Notiflix from "notiflix";
 
 const loadPage = createAsyncThunk(
   "superheroes/loadPage",
   async (credentials, thunkAPI) => {
-    console.log(credentials.page)
     try {
       const data = await getAll(credentials.page);
       return data;
@@ -18,7 +17,6 @@ const loadPage = createAsyncThunk(
 const createHero = createAsyncThunk(
   "superheroes/create",
   async (credentials, { rejectWithValue }) => {
-    console.log(credentials)
     try {
       const { data } = await createNew(credentials);
       Notiflix.Notify.success("Hero created");
@@ -29,9 +27,22 @@ const createHero = createAsyncThunk(
     }
   }
 );
+const getHero = createAsyncThunk(
+  "superheroes/getHero",
+  async (credentials, thunkAPI) => {
+    try {
+      const data = await getById(credentials._id);
+      return data;
+    } catch (err) {
+      Notiflix.Notify.failure(err.response.data.message);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
 const authOperations = {
   loadPage,
-  createHero
+  createHero,
+  getHero,
 };
 export default authOperations;

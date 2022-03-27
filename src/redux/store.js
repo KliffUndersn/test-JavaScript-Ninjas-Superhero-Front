@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./auth/auth-slice";
-// import summaries from "./calendar/summaries/summaries-slice";
+import superheroesReducer from "./superheroes/superheroes-slice";
 
 const persistConfig = {
   key: "user",
@@ -22,8 +22,7 @@ const persistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authReducer),
-    // calendar: summaries,
-    // notAllowedProducts: null,
+    hero: superheroesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

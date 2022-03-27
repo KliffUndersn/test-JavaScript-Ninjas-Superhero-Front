@@ -4,11 +4,18 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { initialState } from "../MainPage/initialState";
 import { Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import superheroesOperations from "../../redux/superheroes/superheroes-operations";
+import { useHistory } from "react-router-dom";
 
 const RedactorPage = () => {
-
-  // isLoggedIn? render edit btn
-  
+  const dispatch = useDispatch();
+  const init = useSelector(state => state.hero.hero)
+  const { location } = useHistory()
+  const _id = location.pathname.substring(1)
+  React.useEffect(() => {
+    dispatch(superheroesOperations.getHero({ _id }))
+  }, []);
   function srcset(image, width, height, rows = 1, cols = 1) {
     return {
       src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
@@ -17,8 +24,7 @@ const RedactorPage = () => {
       }&fit=crop&auto=format&dpr=2 2x`,
     };
   }
-  return (
-    <>
+  return (<> {init? <>
       <ImageList
         sx={{
           width: 1,
@@ -29,12 +35,12 @@ const RedactorPage = () => {
         rowHeight={200}
         gap={1}
       >
-        {initialState[0].images.map((item) => {
+        {init?.images.map((item) => {
           const cols = item.featured ? 2 : 1;
           const rows = item.featured ? 2 : 1;
 
           return (
-            <ImageListItem key={item} cols={cols} rows={rows}>
+            <ImageListItem key={init._id} cols={cols} rows={rows}>
               <img
                 {...srcset(item, 250, 200, rows, cols)}
                 alt={"superhero"}
@@ -54,20 +60,20 @@ const RedactorPage = () => {
         })}
       </ImageList>
       <Typography gutterBottom variant="h4" component="div">
-        Nickname: {initialState[0].nickname}
+        Nickname: {init.nickname}
       </Typography>
       <Typography gutterBottom variant="h5" component="div">
-        Real name: {initialState[0].real_name}
+        Real name: {init.real_name}
       </Typography>
       <Typography gutterBottom variant="h5" component="div">
-        Description: {initialState[0].origin_description}
+        Description: {init.origin_description}
       </Typography>
       <Typography gutterBottom variant="h5" component="div">
-        Superpowers: {initialState[0].superpowers}
+        Superpowers: {init.superpowers}
       </Typography>
       <Typography gutterBottom variant="h5" component="div">
-        Catch phrase: {initialState[0].catch_phrase}
-      </Typography>
+        Catch phrase: {init.catch_phrase}
+      </Typography> </> : <p>Cant find</p>}
     </>
   );
 };

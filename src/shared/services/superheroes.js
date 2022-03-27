@@ -9,7 +9,7 @@ export async function getAll(credentials) {
   return { data };
 }
 export async function getById(credentials) {
-  const { data } = await instance.get("/superheroes/hero", credentials);
+  const { data } = await instance.get(`/superheroes/hero/${credentials}`);
   return { data };
 }
 export async function createNew (credentials) {

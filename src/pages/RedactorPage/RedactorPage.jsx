@@ -5,16 +5,16 @@ import Button from '@mui/material/Button';
 import styles from "./RedactorPage.module.css"
 
 import { useForm } from "../../shared/hooks"
+import { useState } from 'react';
 
 const  RedactorPage = () => {
   const dispatch = useDispatch(); 
 const [data, handleChange, handleSubmit] = useForm({}, onSubmit);
+const [image, setImage] = useState([])
 function onSubmit() {
-  console.log(data.images)
-  let arr = new Set([data.images]) 
-  let arr1 = Array.from(arr)
-  console.log(arr1)
-  dispatch(superheroesOperations.createHero(data));
+  const dataToSend = {...data, images: image}
+  dispatch(superheroesOperations.createHero(dataToSend));
+  setImage([])
 }
   return (<>
   <form onSubmit={handleSubmit} className={styles.form}>
@@ -23,7 +23,7 @@ function onSubmit() {
   <Input className={styles.input} name={"origin_description"}  placeholder={"Origin description"}value={data.origin_description} onChange={handleChange}/>
   <Input className={styles.input} name={"superpowers"}  placeholder={"Superpowers"}value={data.superpowers} onChange={handleChange}/>
   <Input className={styles.input} name={"catch_phrase"}  placeholder={"Catch phrase"}value={data.catch_phrase} onChange={handleChange}/>
-  <Input className={styles.input} name={"images"} placeholder={"Images"} value={data.images} onChange={handleChange}/>
+  <Input className={styles.input} name={"images"} placeholder={"Images"} value={data.images} onBlur={( {target}) => {setImage(im=> [...im, target.value])}}/>
   <Button variant="contained" onClick={handleSubmit}>Be a Hero</Button>
   </form>
   {/* <ul>

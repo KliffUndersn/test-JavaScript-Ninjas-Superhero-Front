@@ -19,10 +19,9 @@ const Routes = () => {
       <Switch>
         <PublicRoute restricted exact path="/" redirectTo="/">
           <Navbar />
-          {/* <SuperheroPage /> */}
-          {/* <MainPage /> */}
-          <RedactorPage/>
+          <MainPage />
         </PublicRoute>
+        
         <PublicRoute restricted exact path="/login" redirectTo="/">
           <Navbar />
           <LoginPage />
@@ -31,10 +30,15 @@ const Routes = () => {
           <Navbar />
           <RegisterPage />
         </PublicRoute>
-        <PrivateRoute exact path="/edit" redirectTo="/login">
+        <PrivateRoute exact path="/create" redirectTo="/login">
           <Navbar />
           <RedactorPage />
         </PrivateRoute>
+        <PublicRoute restricted exact path="/:id" redirectTo="/">
+          <Navbar />
+          <SuperheroPage />
+          <RedactorPage />
+        </PublicRoute>
       </Switch>
     </Suspense>
   );

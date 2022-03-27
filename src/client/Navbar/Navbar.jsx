@@ -11,9 +11,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import { Link } from "react-router-dom";
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleChange = (event) => {
@@ -33,17 +34,20 @@ export default function MenuAppBar() {
       <FormGroup>
         <FormControlLabel
           control={
+            <Link to="/login">
             <Switch
               checked={auth}
               onChange={handleChange}
               aria-label="login switch"
             />
+            </Link>
           }
           label={auth ? "Logout" : "Login"}
         />
       </FormGroup>
       <AppBar position="static">
         <Toolbar>
+        <Link to="/">
           <IconButton
             size="large"
             edge="start"
@@ -53,6 +57,7 @@ export default function MenuAppBar() {
           >
             <HomeIcon />
           </IconButton>
+          </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Superhero database
           </Typography>
