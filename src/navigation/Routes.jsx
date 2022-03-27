@@ -30,10 +30,14 @@ const Routes = () => {
           <Navbar />
           <RegisterPage />
         </PublicRoute>
-        <PrivateRoute exact path="/create" redirectTo="/login">
+        <PublicRoute restricted exact path="/create" redirectTo="/">
           <Navbar />
           <RedactorPage />
-        </PrivateRoute>
+        </PublicRoute>
+        {/* <PrivateRoute exact path="/create" redirectTo="/login">
+          <Navbar />
+          <RedactorPage />
+        </PrivateRoute> */}
         <PublicRoute restricted exact path="/:id" redirectTo="/">
           <Navbar />
           <SuperheroPage />

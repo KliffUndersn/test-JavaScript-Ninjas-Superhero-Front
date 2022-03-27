@@ -14,7 +14,7 @@ export const heroSlice = createSlice({
       state.error = payload;
     },
     [superheroesOperations.getHero.fulfilled](state, { payload }) {
-      state.hero = payload.data.data;
+      state.oneHero = payload.data.data;
     },
     [superheroesOperations.getHero.rejected](state, { payload }) {
       state.error = payload;

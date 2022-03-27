@@ -1,16 +1,22 @@
 import { Input } from '@mui/material';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import superheroesOperations from "../../redux/superheroes/superheroes-operations";
 import Button from '@mui/material/Button';
 import styles from "./RedactorPage.module.css"
-
+import { initialState } from '../MainPage/initialState';
 import { useForm } from "../../shared/hooks"
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const  RedactorPage = () => {
   const dispatch = useDispatch(); 
-const [data, handleChange, handleSubmit] = useForm({}, onSubmit);
+
 const [image, setImage] = useState([])
+const { location } = useHistory()
+const init = useSelector(state => state.hero.oneHero)
+const initial = location.pathname === "/create" ? {} : init
+
+const [data, handleChange, handleSubmit] = useForm({}, onSubmit);
 function onSubmit() {
   const dataToSend = {...data, images: image}
   dispatch(superheroesOperations.createHero(dataToSend));

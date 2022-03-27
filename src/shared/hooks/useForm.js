@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export const useForm = (initialState, onSubmitForm) => {
   const [data, setData] = useState(initialState);
-
   const handleChange = ({ target }) => {
     const { type, name, value, checked } = target;
     const newValue = type === "checkbox" ? checked : value;

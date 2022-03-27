@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import superheroesOperations from "../../redux/superheroes/superheroes-operations";
 import { useHistory } from "react-router-dom";
 
-const RedactorPage = () => {
+const SuperheroPage = () => {
   const dispatch = useDispatch();
-  const init = useSelector(state => state.hero.hero)
+  const init = useSelector(state => state.hero.oneHero)
   const { location } = useHistory()
   const _id = location.pathname.substring(1)
   React.useEffect(() => {
@@ -78,4 +78,4 @@ const RedactorPage = () => {
   );
 };
 
-export default RedactorPage;
+export default SuperheroPage;
