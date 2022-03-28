@@ -12,6 +12,7 @@ import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { Link } from "react-router-dom";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(false);
@@ -56,6 +57,17 @@ export default function MenuAppBar() {
             sx={{ mr: 2 }}
           >
             <HomeIcon />
+          </IconButton>
+          </Link>
+          <Link to="/create">
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <AddBoxIcon />
           </IconButton>
           </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

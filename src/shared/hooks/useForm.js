@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useForm = (initialState, onSubmitForm) => {
+  useEffect(() => {
+    setData(initialState);
+  }, []);
   const [data, setData] = useState(initialState);
   const handleChange = ({ target }) => {
     const { type, name, value, checked } = target;
