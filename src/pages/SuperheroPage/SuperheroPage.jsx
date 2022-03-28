@@ -7,6 +7,8 @@ import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import superheroesOperations from "../../redux/superheroes/superheroes-operations";
 import { useHistory } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from "react-router-dom";
 
 const SuperheroPage = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,10 @@ const SuperheroPage = () => {
         height * rows
       }&fit=crop&auto=format&dpr=2 2x`,
     };
+  }
+  const deleteHandler =() => {
+    dispatch(superheroesOperations.deleteHero({ _id }))
+
   }
   return (<> {init? <>
       <ImageList
@@ -59,6 +65,7 @@ const SuperheroPage = () => {
           );
         })}
       </ImageList>
+        <DeleteIcon onClick={deleteHandler}/>
       <Typography gutterBottom variant="h4" component="div">
         Nickname: {init.nickname}
       </Typography>

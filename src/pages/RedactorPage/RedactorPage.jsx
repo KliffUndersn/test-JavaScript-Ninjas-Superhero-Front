@@ -8,10 +8,9 @@ import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 
 const  RedactorPage = () => {
-  const dispatch = useDispatch(); 
-
+const dispatch = useDispatch(); 
+const [image, setImage] = useState()
 const [imageInput, setimageInput] = useState([""]);
-
 const { location } = useHistory()
 const init = useSelector(state => state.hero.oneHero)
 const temp = init ? init : {};
@@ -20,30 +19,28 @@ const initial = pathToCreate ? {} : temp
 const [data, handleChange, handleSubmit] = useForm(initial, onSubmit);
 const toggle = pathToCreate ? imageInput : data?.images
 
-
 function onSubmit() {
-  const dataToSend = {...data, images: imageInput}
-  dispatch(superheroesOperations.createHero(dataToSend));
+  const dataToSend = {...data, images: imageInput};
+  pathToCreate ? dispatch(superheroesOperations.createHero(dataToSend)) : dispatch(superheroesOperations.editHero(dataToSend));
   setimageInput([])
 }
 const handleInputChange = (event, i) => {
   const { value } = event.target;
-    const li = [...imageInput];
+    const li = [...toggle];
     li[i] = value;
-    setimageInput(li);
+    toggle? setimageInput(li): handleChange(li);
 }
 
 const handleRemoveClick = i => {
-  const li = [...imageInput];
+  const li = [...toggle];
   li.splice(i, 1);
-  setimageInput(li);
+  toggle? setimageInput(li): handleChange(li);
 };
 
 const handleAddClick = () => {
-  setimageInput([...imageInput, ""]);
+  toggle? setimageInput([...toggle, ""]) : handleChange({toggle:[...data.images, ""]});
 };
-console.log(toggle);
-// return (<></>)
+
   return (<>
   <form onSubmit={handleSubmit} className={styles.form}>
   <Input className={styles.input} name={"nickname"} placeholder={"Nickname"} value={data.nickname} onChange={handleChange}/>
@@ -53,13 +50,15 @@ console.log(toggle);
   <Input className={styles.input} name={"catch_phrase"}  placeholder={"Catch phrase"}value={data.catch_phrase} onChange={handleChange}/>
   {toggle? toggle.map((el, i) => { return(
   <div className={styles.input} key={"keyname"+[i]}>  
-    <Input className={styles.input} name={"name"+[i]} placeholder={"image"} value={el} onChange={event => handleInputChange(event, i) } />
+    <Input className={styles.input} name={"name"+[i]} placeholder={"Add new photo"} value={el} onChange={event => handleInputChange(event, i) } />
       <div>
         {toggle.length !== 1 && <Button variant="contained" onClick={() => handleRemoveClick(i)}>Remove</Button>}
         {toggle.length - 1 === i && <Button variant="contained" onClick={handleAddClick}>Add</Button>}
       </div>
   </div>)
-      }): <></>}
+      }): <></>
+      // <Input className={styles.input} name={"1stphotoname"} placeholder={"Find a photo?"} value={image} onBlur={( {target}) => {setImage(im=> [...im, target.value])}} />
+      }
  
   <Button variant="contained" onClick={handleSubmit}>{pathToCreate ? "Be a Hero" : "Edit Hero"}</Button>
   </form>

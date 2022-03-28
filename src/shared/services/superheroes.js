@@ -16,3 +16,12 @@ export async function createNew (credentials) {
   const { data } = await instance.post("/superheroes", credentials);
   return { data };
 };
+export async function updateById(credentials) {
+  const { data } = await instance.patch(`/superheroes/hero/${credentials._id}`, credentials);
+  return { data };
+}
+export async function removeById(credentials) {
+  console.log(credentials)
+  const { data } = await instance.delete(`/superheroes/hero/${credentials}`);
+  return { data };
+}
