@@ -9,15 +9,13 @@ import { useState } from 'react';
 
 const  RedactorPage = () => {
 const dispatch = useDispatch(); 
-const [image, setImage] = useState()
-const [imageInput, setimageInput] = useState([""]);
 const { location } = useHistory()
-const init = useSelector(state => state.hero.oneHero)
-const temp = init ? init : {};
+const [imageInput, setimageInput] = useState([""]);
+const innerData = useSelector(state => state.hero.oneHero)
 const pathToCreate = location.pathname === "/create"
-const initial = pathToCreate ? {} : temp
+const initial = pathToCreate ? {} : {...innerData}
 const [data, handleChange, handleSubmit] = useForm(initial, onSubmit);
-const toggle = pathToCreate ? imageInput : data?.images
+const toggle = pathToCreate ? imageInput : initial?.images
 
 function onSubmit() {
   const dataToSend = {...data, images: imageInput};
@@ -28,17 +26,17 @@ const handleInputChange = (event, i) => {
   const { value } = event.target;
     const li = [...toggle];
     li[i] = value;
-    toggle? setimageInput(li): handleChange(li);
+     setimageInput(li) 
 }
 
 const handleRemoveClick = i => {
   const li = [...toggle];
   li.splice(i, 1);
-  toggle? setimageInput(li): handleChange(li);
+   setimageInput(li)
 };
 
 const handleAddClick = () => {
-  toggle? setimageInput([...toggle, ""]) : handleChange({toggle:[...data.images, ""]});
+   setimageInput([...toggle, ""])
 };
 
   return (<>
@@ -57,7 +55,6 @@ const handleAddClick = () => {
       </div>
   </div>)
       }): <></>
-      // <Input className={styles.input} name={"1stphotoname"} placeholder={"Find a photo?"} value={image} onBlur={( {target}) => {setImage(im=> [...im, target.value])}} />
       }
  
   <Button variant="contained" onClick={handleSubmit}>{pathToCreate ? "Be a Hero" : "Edit Hero"}</Button>

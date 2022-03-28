@@ -19,6 +19,12 @@ export const heroSlice = createSlice({
     [superheroesOperations.getHero.rejected](state, { payload }) {
       state.error = payload;
     },
+    [superheroesOperations.editHero.fulfilled](state, { payload }) {
+      state.oneHero = payload.data.data;
+    },
+    [superheroesOperations.editHero.rejected](state, { payload }) {
+      state.error = payload;
+    },
   },
 });
 

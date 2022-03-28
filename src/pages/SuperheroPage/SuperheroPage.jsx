@@ -2,13 +2,13 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { initialState } from "../MainPage/initialState";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import superheroesOperations from "../../redux/superheroes/superheroes-operations";
 import { useHistory } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from "react-router-dom";
+import RedactorPage from "../RedactorPage/RedactorPage";
+import EditIcon from '@mui/icons-material/Edit';
 
 const SuperheroPage = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,9 @@ const SuperheroPage = () => {
   React.useEffect(() => {
     dispatch(superheroesOperations.getHero({ _id }))
   }, []);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  const onButtonClick = () => setIsVisible((p) => !p);
   function srcset(image, width, height, rows = 1, cols = 1) {
     return {
       src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
@@ -28,7 +31,6 @@ const SuperheroPage = () => {
   }
   const deleteHandler =() => {
     dispatch(superheroesOperations.deleteHero({ _id }))
-
   }
   return (<> {init? <>
       <ImageList
@@ -81,6 +83,10 @@ const SuperheroPage = () => {
       <Typography gutterBottom variant="h5" component="div">
         Catch phrase: {init.catch_phrase}
       </Typography> </> : <p>Cant find</p>}
+      <IconButton aria-label="edit" size="small" onClick={onButtonClick}>
+            <EditIcon fontSize="inherit" />
+       </IconButton>
+       {isVisible && <RedactorPage />}
     </>
   );
 };

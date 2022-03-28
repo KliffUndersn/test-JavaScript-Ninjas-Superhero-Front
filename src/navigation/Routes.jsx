@@ -41,7 +41,6 @@ const Routes = () => {
         <PublicRoute restricted exact path="/:id" redirectTo="/">
           <Navbar />
           <SuperheroPage />
-          <RedactorPage />
         </PublicRoute>
       </Switch>
     </Suspense>
